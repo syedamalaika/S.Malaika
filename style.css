@@ -355,13 +355,14 @@ section {
 
 .hero-image {
     position: relative;
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    border-radius: 30px;
+    width: 320px;
+    height: 320px;
+    max-width: 100%;
+    border-radius: 50%;
     box-shadow: var(--shadow-lg);
     border: 3px solid var(--border-color);
     object-fit: cover;
+    animation: floatImage 6s ease-in-out infinite;
 }
 
 .scroll-indicator {
@@ -488,13 +489,20 @@ section {
 
 .about-image {
     position: relative;
-    width: 100%;
-    max-width: 450px;
-    height: auto;
-    border-radius: 20px;
+    width: 260px;
+    height: 260px;
+    max-width: 100%;
+    border-radius: 50%;
     box-shadow: var(--shadow-lg);
     border: 3px solid var(--border-color);
     object-fit: cover;
+    animation: floatImage 7.5s ease-in-out infinite;
+}
+
+@keyframes floatImage {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-18px) scale(1.02); }
+    100% { transform: translateY(0) scale(1); }
 }
 
 .about-stats {
