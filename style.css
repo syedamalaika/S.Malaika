@@ -1047,3 +1047,140 @@ textarea.form-control {
         font-size: 1.5rem;
     }
 }
+
+/* ===================================
+   ADDITIONAL UI: THEME, CURSOR, FLOATING CARDS, SPINNER
+   =================================== */
+
+/* Light theme override */
+.light-theme {
+    --bg-primary: #f7f8fb;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    --bg-card: rgba(15, 23, 42, 0.04);
+    --bg-card-hover: rgba(15, 23, 42, 0.06);
+    --text-primary: #0f1724;
+    --text-secondary: #475569;
+    --text-muted: #6b7280;
+    --border-color: rgba(15, 23, 42, 0.06);
+}
+
+/* Theme toggle button */
+#themeToggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    z-index: 2200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+#themeToggle::before {
+    content: '\2600'; /* sun */
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+.light-theme #themeToggle::before {
+    content: '\263E'; /* moon */
+}
+
+/* Cursor dot */
+.cursor {
+    position: fixed;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.09s linear, width 0.12s ease, height 0.12s ease, background 0.15s ease;
+    z-index: 3000;
+    mix-blend-mode: difference;
+}
+
+.cursor.expand {
+    width: 28px;
+    height: 28px;
+    opacity: 0.9;
+}
+
+.mouse-coords {
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    z-index: 3000;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Floating cards */
+.floating-cards {
+    position: fixed;
+    right: 40px;
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    z-index: 1500;
+}
+
+.floating-card {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    font-weight: 700;
+    transform-origin: center;
+    animation: floatCard 6s ease-in-out infinite;
+}
+
+.floating-card:nth-child(2) { animation-duration: 7s; transform: translateX(10px); }
+.floating-card:nth-child(3) { animation-duration: 5.5s; transform: translateX(-8px); }
+
+@keyframes floatCard {
+    0% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-18px) rotate(2deg); }
+    100% { transform: translateY(0) rotate(-1deg); }
+}
+
+/* Spinning circle */
+.spinning-circle {
+    position: fixed;
+    right: 24px;
+    bottom: 120px;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 6px solid rgba(99, 102, 241, 0.18);
+    box-shadow: 0 0 40px rgba(99,102,241,0.08);
+    z-index: 1400;
+    animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* small adjustments for mobile */
+@media (max-width: 767px) {
+    .floating-cards { display: none; }
+    .spinning-circle { display: none; }
+}
