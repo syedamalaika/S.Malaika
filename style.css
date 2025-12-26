@@ -338,7 +338,7 @@ section {
     width: 400px;
     height: 400px;
     background: var(--gradient-primary);
-    border-radius: 50%;
+    border-radius: 100%;
     filter: blur(80px);
     opacity: 0.3;
     animation: pulse 3s ease-in-out infinite;
