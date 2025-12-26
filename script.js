@@ -224,3 +224,73 @@ document.addEventListener('mousemove', (e) => {
 // ===================================
 console.log('%c👋 Welcome to Syeda Malaika\'s Portfolio!', 'color: #6366f1; font-size: 20px; font-weight: bold;');
 console.log('%cLooking for a web developer? Let\'s connect!', 'color: #ec4899; font-size: 14px;');
+
+/* ===================================
+   THEME TOGGLE + MOUSE TRACKER + FLOATING CARDS
+   =================================== */
+
+// Theme toggle (persisted)
+const themeToggle = document.getElementById('themeToggle');
+function applyTheme(theme) {
+    if (theme === 'light') {
+        document.documentElement.classList.add('light-theme');
+    } else {
+        document.documentElement.classList.remove('light-theme');
+    }
+    try { localStorage.setItem('theme', theme); } catch (e) {}
+}
+
+// initialize theme
+(function() {
+    const saved = (function() {
+        try { return localStorage.getItem('theme'); } catch (e) { return null; }
+    })();
+    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    const initial = saved || (prefersLight ? 'light' : 'dark');
+    applyTheme(initial);
+})();
+
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const isLight = document.documentElement.classList.contains('light-theme');
+        applyTheme(isLight ? 'dark' : 'light');
+    });
+}
+
+// Cursor and mouse coords
+const cursor = document.getElementById('cursor');
+const mouseCoords = document.getElementById('mouseCoords');
+
+document.addEventListener('mousemove', (e) => {
+    if (cursor) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    }
+    if (mouseCoords) {
+        mouseCoords.textContent = `x: ${e.clientX} y: ${e.clientY}`;
+    }
+
+    // subtle parallax for floating cards
+    const fc = document.querySelector('.floating-cards');
+    if (fc) {
+        const rx = (e.clientX - window.innerWidth / 2) / 50;
+        const ry = (e.clientY - window.innerHeight / 2) / 80;
+        fc.style.transform = `translate(${rx}px, ${ry}px)`;
+    }
+});
+
+// expand cursor for interactions
+document.addEventListener('mousedown', () => cursor && cursor.classList.add('expand'));
+document.addEventListener('mouseup', () => cursor && cursor.classList.remove('expand'));
+
+// expand when hovering interactive elements
+document.querySelectorAll('a, button, .btn, .portfolio-link').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor && cursor.classList.add('expand'));
+    el.addEventListener('mouseleave', () => cursor && cursor.classList.remove('expand'));
+});
+
+// reduce motion for prefers-reduced-motion
+if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.floating-card').forEach(c => c.style.animation = 'none');
+    document.querySelectorAll('.spinning-circle').forEach(s => s.style.animation = 'none');
+}
