@@ -338,7 +338,7 @@ section {
     width: 400px;
     height: 400px;
     background: var(--gradient-primary);
-    border-radius: 100%;
+    border-radius: 50%;
     filter: blur(80px);
     opacity: 0.3;
     animation: pulse 3s ease-in-out infinite;
@@ -358,11 +358,11 @@ section {
     width: 320px;
     height: 320px;
     max-width: 100%;
-    border-radius: 50%;
+    border-radius: 100%;
     box-shadow: var(--shadow-lg);
     border: 3px solid var(--border-color);
     object-fit: cover;
-    animation: floatImage 6s ease-in-out infinite;
+    animation: floatImage 5.5s ease-in-out infinite;
 }
 
 .scroll-indicator {
@@ -496,13 +496,29 @@ section {
     box-shadow: var(--shadow-lg);
     border: 3px solid var(--border-color);
     object-fit: cover;
-    animation: floatImage 7.5s ease-in-out infinite;
+    animation: floatImage 6.5s ease-in-out infinite;
 }
 
 @keyframes floatImage {
     0% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-18px) scale(1.02); }
+    50% { transform: translateY(-12px) scale(1.02); }
     100% { transform: translateY(0) scale(1); }
+}
+
+/* Pause float on hover and provide gentle rest transform */
+.hero-image:hover,
+.about-image:hover {
+    animation-play-state: paused;
+    transform: translateY(-6px) scale(1.02);
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .hero-image,
+    .about-image {
+        animation: none !important;
+        transform: none !important;
+    }
 }
 
 .about-stats {
