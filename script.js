@@ -1,7 +1,7 @@
 // ===================================
 // NAVIGATION SCROLL EFFECT
 // ===================================
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     const navbar = document.getElementById('mainNav');
     if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
@@ -20,12 +20,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (target) {
             const navbarHeight = document.getElementById('mainNav').offsetHeight;
             const targetPosition = target.offsetTop - navbarHeight;
-            
+
             window.scrollTo({
                 top: targetPosition,
                 behavior: 'smooth'
             });
-            
+
             // Close mobile menu if open
             const navbarCollapse = document.querySelector('.navbar-collapse');
             if (navbarCollapse.classList.contains('show')) {
@@ -38,10 +38,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ===================================
 // ACTIVE NAVIGATION LINK ON SCROLL
 // ===================================
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-    
+
     let current = '';
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
@@ -50,7 +50,7 @@ window.addEventListener('scroll', function() {
             current = section.getAttribute('id');
         }
     });
-    
+
     navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === `#${current}`) {
@@ -67,7 +67,7 @@ const observerOptions = {
     rootMargin: '0px 0px -100px 0px'
 };
 
-const skillObserver = new IntersectionObserver(function(entries) {
+const skillObserver = new IntersectionObserver(function (entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const progressBars = entry.target.querySelectorAll('.progress-bar');
@@ -93,20 +93,20 @@ if (skillsSection) {
 // ===================================
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        
+
         // Get form values
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const subject = document.getElementById('subject').value;
         const message = document.getElementById('message').value;
-        
+
         // Simple validation
         if (name && email && subject && message) {
             // Show success message (you can customize this)
             alert(`Thank you, ${name}! Your message has been sent successfully. I'll get back to you soon!`);
-            
+
             // Reset form
             contactForm.reset();
         } else {
@@ -118,7 +118,7 @@ if (contactForm) {
 // ===================================
 // ANIMATE ELEMENTS ON SCROLL
 // ===================================
-const fadeInObserver = new IntersectionObserver(function(entries) {
+const fadeInObserver = new IntersectionObserver(function (entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
@@ -145,7 +145,7 @@ cards.forEach(card => {
 function typeWriter(element, text, speed = 50) {
     let i = 0;
     element.textContent = '';
-    
+
     function type() {
         if (i < text.length) {
             element.textContent += text.charAt(i);
@@ -153,7 +153,7 @@ function typeWriter(element, text, speed = 50) {
             setTimeout(type, speed);
         }
     }
-    
+
     type();
 }
 
@@ -174,7 +174,7 @@ function typeWriter(element, text, speed = 50) {
 // ===================================
 // PARALLAX EFFECT FOR HERO BACKGROUND
 // ===================================
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     const heroBackground = document.querySelector('.hero-background');
     if (heroBackground) {
         const scrolled = window.scrollY;
@@ -185,9 +185,9 @@ window.addEventListener('scroll', function() {
 // ===================================
 // PRELOADER (OPTIONAL)
 // ===================================
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     document.body.classList.add('loaded');
-    
+
     // Add stagger animation to hero elements
     const heroElements = document.querySelectorAll('.hero-badge, .hero-title, .hero-subtitle, .hero-buttons, .social-links');
     heroElements.forEach((element, index) => {
@@ -237,12 +237,12 @@ function applyTheme(theme) {
     } else {
         document.documentElement.classList.remove('light-theme');
     }
-    try { localStorage.setItem('theme', theme); } catch (e) {}
+    try { localStorage.setItem('theme', theme); } catch (e) { }
 }
 
 // initialize theme
-(function() {
-    const saved = (function() {
+(function () {
+    const saved = (function () {
         try { return localStorage.getItem('theme'); } catch (e) { return null; }
     })();
     const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
