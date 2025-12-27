@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Syeda Malaika | Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    background:#050505;
+    color:#fff;
+    overflow:hidden;
+}
+
+/* ===== Layered cinematic background ===== */
+.layer{
+    position:absolute;
+    inset:-30%;
+    animation:slowFloat 30s ease-in-out infinite alternate;
+}
+.layer.one{
+    background:radial-gradient(circle at 20% 30%,rgba(95,90,246,.35),transparent 40%);
+}
+.layer.two{
+    background:radial-gradient(circle at 80% 70%,rgba(0,198,255,.25),transparent 45%);
+    animation-duration:36s;
+}
+@keyframes slowFloat{
+    from{transform:translate(-3%,-3%)}
+    to{transform:translate(3%,3%)}
+}
+
+/* ===== Cursor light ===== */
+.cursor{
+    position:absolute;
+    width:320px;
+    height:320px;
+    border-radius:50%;
+    pointer-events:none;
+    background:radial-gradient(circle,rgba(0,198,255,.18),transparent 70%);
+    transform:translate(-50%,-50%);
+    transition:transform .2s ease-out;
+}
+
+/* ===== Main card ===== */
+.card-box{
+    position:relative;
+    background:rgba(255,255,255,.045);
+    backdrop-filter:blur(35px);
+    padding:100px 80px;
+    border-radius:32px;
+    text-align:center;
+    box-shadow:0 100px 200px rgba(0,0,0,.9);
+    opacity:0;
+    transform:translateY(80px) scale(.92);
+    animation:cardEnter 2s cubic-bezier(.16,1,.3,1) forwards 1s,
+             cardIdle 8s ease-in-out infinite 3s;
+}
+
+@keyframes cardEnter{
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes cardIdle{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.02)}
+}
+
+/* ===== Animated border ===== */
+.card-box::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:32px;
+    padding:1.5px;
+    background:linear-gradient(140deg,#5f5af6,#00c6ff,#5f5af6);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    animation:borderShift 10s linear infinite;
+}
+@keyframes borderShift{
+    from{filter:hue-rotate(0deg)}
+    to{filter:hue-rotate(360deg)}
+}
+
+/* ===== Text reveal ===== */
+.name{
+    font-size:56px;
+    font-weight:800;
+    background:linear-gradient(90deg,#a5a2ff,#00c6ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    margin-bottom:20px;
+    opacity:0;
+    animation:textReveal 1.2s ease forwards 1.6s;
+}
+
+.typing{
+    font-size:15px;
+    letter-spacing:4px;
+    color:#cfcfcf;
+    margin-bottom:70px;
+    min-height:22px;
+    opacity:0;
+    animation:textReveal 1.2s ease forwards 2.1s;
+}
+
+@keyframes textReveal{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+/* ===== Magnetic button ===== */
+.btn-glow{
+    position:relative;
+    padding:20px 68px;
+    font-size:18px;
+    border-radius:60px;
+    color:#fff;
+    background:linear-gradient(90deg,#5f5af6,#00c6ff);
+    border:none;
+    box-shadow:0 35px 90px rgba(0,198,255,.45);
+    transition:transform .25s ease, box-shadow .25s ease;
+    opacity:0;
+    animation:textReveal 1.2s ease forwards 2.6s,
+             pulse 3.5s ease-in-out infinite 4s;
+}
+@keyframes pulse{
+    0%,100%{box-shadow:0 35px 90px rgba(0,198,255,.35)}
+    50%{box-shadow:0 50px 140px rgba(0,198,255,.7)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="layer one"></div>
+<div class="layer two"></div>
+<div class="cursor" id="cursor"></div>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100 position-relative">
+    <div class="card-box">
+        <h1 class="name">Syeda Malaika</h1>
+        <div class="typing" id="typing"></div>
+        <a href="portfolio.html" class="btn btn-glow" id="magBtn">
+            View Portfolio
+        </a>
+    </div>
+</div>
+
+<script>
+/* Typing */
+const text="FRONTEND WEB DEVELOPER";
+let i=0;
+(function type(){
+    if(i<text.length){
+        document.getElementById("typing").innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(type,85);
+    }
+})();
+
+/* Cursor light */
+document.addEventListener("mousemove",e=>{
+    const c=document.getElementById("cursor");
+    c.style.left=e.clientX+"px";
+    c.style.top=e.clientY+"px";
+});
+
+/* Magnetic button */
+const btn=document.getElementById("magBtn");
+btn.addEventListener("mousemove",e=>{
+    const r=btn.getBoundingClientRect();
+    const x=e.clientX-r.left-r.width/2;
+    const y=e.clientY-r.top-r.height/2;
+    btn.style.transform=`translate(${x*0.15}px,${y*0.15}px) scale(1.05)`;
+});
+btn.addEventListener("mouseleave",()=>{
+    btn.style.transform="translate(0,0) scale(1)";
+});
+</script>
+
+</body>
+</html>
+
